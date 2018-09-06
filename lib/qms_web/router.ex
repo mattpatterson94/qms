@@ -14,7 +14,7 @@ defmodule QmsWeb.Router do
   end
 
   scope "/", QmsWeb do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :api # Use the default browser stack
 
     get "/", PageController, :index
   end
