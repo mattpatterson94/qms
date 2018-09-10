@@ -1,9 +1,15 @@
 defmodule QmsWeb.AuthView do
   use QmsWeb, :view
 
-  def render("show.json", _params) do
+  def render("update.json", _params) do
     %{
-      result: "BOB"
+      response_type: "in_channel",
+      text: "It's 80 degrees right now.",
+      attachments: [
+        %{
+          text: "Partly cloudy today and tomorrow"
+        }
+      ]
     }
   end
 end

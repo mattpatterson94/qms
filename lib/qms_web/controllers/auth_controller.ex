@@ -1,14 +1,16 @@
 defmodule QmsWeb.AuthController do
   use QmsWeb, :controller
 
-  def show(conn, _params) do
+  def create(conn, _params) do
     # render conn, "show.json"
     spotify_url = "https://accounts.spotify.com/authorize"
     redirect_uri = "http://localhost:4000/auth/update"
     response_type = "code"
     client_id = "1234"
 
-    redirect conn, external: "#{spotify_url}?response_type=#{response_type}&client_id=#{client_id}&redirect_uri=#{redirect_uri}"
+    render conn, "update.json"
+
+    # redirect conn, external: "#{spotify_url}?response_type=#{response_type}&client_id=#{client_id}&redirect_uri=#{redirect_uri}"
   end
 
   # token=gIkuvaNzQIHg97ATvDxqgjtO
@@ -25,9 +27,7 @@ defmodule QmsWeb.AuthController do
   # &response_url=https://hooks.slack.com/commands/1234/5678
   # &trigger_id=13345224609.738474920.8088930838d88f008e0
 
-  def create do
-  end
-
-  def update do
+  def update(conn, _params) do
+    render conn, "update.json"
   end
 end
