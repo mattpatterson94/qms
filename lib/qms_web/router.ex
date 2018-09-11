@@ -13,10 +13,11 @@ defmodule QmsWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", QmsWeb do
+  scope "/api", QmsWeb do
     pipe_through :api # Use the default browser stack
 
-    get "/", PageController, :index
+    resources "/auth", AuthController
+    get "/song", SongController, :show
   end
 
   # Other scopes may use custom stacks.
