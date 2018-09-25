@@ -1,16 +1,20 @@
 defmodule QmsWeb.AuthController do
   use QmsWeb, :controller
+  alias Qms.{Repo, User}
 
-  def create(conn, _params) do
+  def create(conn, params) do
     # render conn, "show.json"
-    spotify_url = "https://accounts.spotify.com/authorize"
-    redirect_uri = "http://localhost:4000/auth/update"
-    response_type = "code"
-    client_id = "1234"
+    # spotify_url = "https://accounts.spotify.com/authorize"
+    # redirect_uri = "http://localhost:4000/auth/update"
+    # response_type = "code"
+    # client_id = "1234"
 
-    render conn, "update.json"
+    # User.registration_changeset(%User{}, params) |> Repo.insert()
 
     # redirect conn, external: "#{spotify_url}?response_type=#{response_type}&client_id=#{client_id}&redirect_uri=#{redirect_uri}"
+    # :httpc.request('https://hooks.slack.com/commands/T19SES5DK/441835809616/eQo0f3m9tR2P6dKK3Bz3EHl5')
+
+    render conn, "update.json"
   end
 
   # token=gIkuvaNzQIHg97ATvDxqgjtO
