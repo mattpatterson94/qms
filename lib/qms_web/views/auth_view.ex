@@ -3,11 +3,11 @@ defmodule QmsWeb.AuthView do
 
   def render("update.json", _params) do
     %{
-      response_type: "in_channel",
-      text: "It's 80 degrees right now.",
+      response_type: "ephemeral",
+      text: "Your Spotify account has been successfully connected to *QMS* :tada:",
       attachments: [
         %{
-          text: "Partly cloudy yesterday and tomorrow"
+          text: "Use `/qms` to start sharing your tracks!"
         }
       ]
     }
