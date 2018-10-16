@@ -7,7 +7,7 @@ defmodule Qms.Repo.Migrations.AddUsersTable do
       add :spotify_refresh_token, :string
       add :spotify_access_token, :string
       add :spotify_token_expiration, :string
-      add :status, :integer, default: 0
+      add :status, :integer, default: 1
 
       timestamps()
     end
