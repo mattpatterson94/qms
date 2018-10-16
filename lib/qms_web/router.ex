@@ -14,10 +14,16 @@ defmodule QmsWeb.Router do
   end
 
   scope "/api", QmsWeb do
-    pipe_through :api # Use the default browser stack
+    pipe_through :api
 
-    resources "/auth", AuthController
-    get "/song", SongController, :index
+    resources "/auth", Api.AuthController, only: [:create]
+    resources "/song", Api.SongController, only: [:create]
+  end
+
+  scope "/webhook", QmsWeb do
+    pipe_through :api
+
+    resources "/auth", Webhook.AuthController, only: [:index]
   end
 
   # Other scopes may use custom stacks.
