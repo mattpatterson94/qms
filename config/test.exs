@@ -12,8 +12,7 @@ config :logger, level: :warn
 # Configure your database
 config :qms, Qms.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: "mattpatterson",
   database: "qms_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
