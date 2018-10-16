@@ -17,7 +17,6 @@ defmodule QmsWeb.Router do
     pipe_through :api # Use the default browser stack
 
     resources "/auth", AuthController
-    get "/song", SongController, :show
   end
 
   # Other scopes may use custom stacks.
