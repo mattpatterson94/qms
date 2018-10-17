@@ -2,8 +2,12 @@ defmodule Qms.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-
   schema "users" do
+    field :slack_user_id, :string
+    field :spotify_refresh_token, :string
+    field :spotify_access_token, :string
+    field :spotify_token_expiration, :string
+    field :status, :integer
 
     timestamps()
   end
@@ -11,7 +15,7 @@ defmodule Qms.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:slack_user_id, :spotify_refresh_token, :spotify_access_token, :spotify_token_expiration, :status])
+    |> validate_required([:slack_user_id, :status])
   end
 end
