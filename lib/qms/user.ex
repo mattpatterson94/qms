@@ -17,5 +17,6 @@ defmodule Qms.User do
     user
     |> cast(attrs, [:slack_user_id, :spotify_refresh_token, :spotify_access_token, :spotify_token_expiration, :status])
     |> validate_required([:slack_user_id, :status])
+    |> validate_inclusion(:status, 0..1)
   end
 end
