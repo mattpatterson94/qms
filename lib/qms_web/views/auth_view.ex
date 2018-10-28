@@ -1,13 +1,20 @@
 defmodule QmsWeb.AuthView do
   use QmsWeb, :view
 
-  def render("update.json", _params) do
+  def render("create.json", params) do
     %{
-      response_type: "in_channel",
-      text: "It's 80 degrees right now.",
+      response_type: "ephemeral",
+      text: "We need permission to use your Spotify.",
       attachments: [
         %{
-          text: "Partly cloudy today and tomorrow"
+          fallback: "<#{params[:url]}|Authenticate with Spotify>",
+          actions: [
+            %{
+              type: "button",
+              text: "Authenticate with Spotify",
+              url: "#{params[:url]}"
+            }
+          ]
         }
       ]
     }

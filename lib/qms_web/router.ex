@@ -16,7 +16,7 @@ defmodule QmsWeb.Router do
   scope "/api", QmsWeb do
     pipe_through :api # Use the default browser stack
 
-    resources "/auth", AuthController
+    resources "/auth", AuthController, only: [:create]
   end
 
   # Other scopes may use custom stacks.
