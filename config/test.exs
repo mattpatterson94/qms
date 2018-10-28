@@ -12,7 +12,8 @@ config :logger, level: :warn
 # Configure your database
 config :qms, Qms.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "mattpatterson",
+  username: System.get_env("PGUSER") || "mattpatterson",
+  password: System.get_env("PGPASSWORD") || nil,
   database: "qms_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
