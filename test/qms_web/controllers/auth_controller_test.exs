@@ -10,9 +10,15 @@ defmodule QmsWeb.AuthControllerTest do
     test "Returns a slack response which includes a button to authenticate user with Spotify", %{conn: conn} do
       expected_url = "https://accounts.spotify.com/authorize?response_type=code&client_id=12345&redirect_url=http://example.com"
 
+      request_params = %{
+        user_id: "U2147483697",
+        command: "/qmsauth",
+        token: "gIkuvaNzQIHg97ATvDxqgjtO"
+      }
+
       response =
         conn
-        |> post(auth_path(conn, :create))
+        |> post(auth_path(conn, :create), request_params)
         |> json_response(200)
 
       expected = %{
@@ -35,17 +41,52 @@ defmodule QmsWeb.AuthControllerTest do
       assert response == expected
     end
 
-    test "Returns already authenticated if user has valid authentication token", %{conn: conn} do
-      Qms.Repo.insert(%Qms.User{slack_user_id: "12345"}, on_conflict: :nothing)
+    test "Persists user in database when request is made", %{conn: conn} do
+      request_params = %{
+        user_id: "U2147483697",
+        command: "/qmsauth",
+        token: "gIkuvaNzQIHg97ATvDxqgjtO"
+      }
 
       response =
         conn
-        |> post(auth_path(conn, :create))
+        |> post(auth_path(conn, :create), request_params)
+        |> json_response(200)
+    end
+
+    test "Returns an error response if not provided the correct details from Slack", %{conn: conn} do
+      request_params = %{}
+
+      response =
+        conn
+        |> post(auth_path(conn, :create), request_params)
+        |> json_response(400)
+
+      expected = %{
+        "response_type" => "ephemeral",
+        "text" => "There was an error with your call. Please try again later.",
+      }
+
+      assert response == expected
+    end
+
+    test "Returns already authenticated if user already has a valid authentication token", %{conn: conn} do
+      Qms.Repo.insert(%Qms.User{slack_user_id: "U2147483697"}, on_conflict: :nothing)
+
+      request_params = %{
+        user_id: "U2147483697",
+        command: "/qmsauth",
+        token: "gIkuvaNzQIHg97ATvDxqgjtO"
+      }
+
+      response =
+        conn
+        |> post(auth_path(conn, :create), request_params)
         |> json_response(200)
 
       expected = %{
-        response_type: "ephemeral",
-        text: "You are already authenticated.",
+        "response_type" => "ephemeral",
+        "text" => "You are already authenticated.",
       }
 
       assert response == expected

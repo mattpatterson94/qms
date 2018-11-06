@@ -2,21 +2,39 @@ defmodule QmsWeb.AuthView do
   use QmsWeb, :view
 
   def render("create.json", params) do
-    %{
-      response_type: "ephemeral",
-      text: "We need permission to use your Spotify.",
-      attachments: [
+    cond do
+      params[:type] == :success ->
         %{
-          fallback: "<#{params[:url]}|Authenticate with Spotify>",
-          actions: [
+          response_type: "ephemeral",
+          text: "We need permission to use your Spotify.",
+          attachments: [
             %{
-              type: "button",
-              text: "Authenticate with Spotify",
-              url: "#{params[:url]}"
+              fallback: "<#{params[:url]}|Authenticate with Spotify>",
+              actions: [
+                %{
+                  type: "button",
+                  text: "Authenticate with Spotify",
+                  url: "#{params[:url]}"
+                }
+              ]
             }
           ]
         }
-      ]
-    }
+      params[:type] == :exists ->
+        %{
+          response_type: "ephemeral",
+          text: "You are already authenticated."
+        }
+      params[:type] == :bad ->
+        %{
+          response_type: "ephemeral",
+          text: "There was an error with your call. Please try again later."
+        }
+      true ->
+        %{
+          response_type: "ephemeral",
+          text: "There was an error with your call. Please try again later."
+        }
+    end
   end
 end
