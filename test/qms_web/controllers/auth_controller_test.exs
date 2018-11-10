@@ -48,10 +48,13 @@ defmodule QmsWeb.AuthControllerTest do
         token: "gIkuvaNzQIHg97ATvDxqgjtO"
       }
 
-      _response =
-        conn
-        |> post(auth_path(conn, :create), request_params)
-        |> json_response(200)
+      conn
+      |> post(auth_path(conn, :create), request_params)
+      |> json_response(200)
+
+      user = Qms.Repo.get_by(Qms.User, slack_user_id: "U2147483697")
+
+      assert !!user == true
     end
 
     test "Returns an error response if not provided the correct details from Slack", %{conn: conn} do

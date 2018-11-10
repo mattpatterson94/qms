@@ -8,7 +8,9 @@ defmodule QmsWeb.AuthController do
   def create(conn, _params = %{"user_id" => user_id}) do
     cond do
       user_exists(user_id) -> render_user_exists(conn)
-      true                 -> render_success(conn)
+      true                 -> create_user(user_id)
+                              |> render_success(conn)
+
     end
   end
 
@@ -16,7 +18,12 @@ defmodule QmsWeb.AuthController do
     render_error(conn)
   end
 
-  defp render_success(conn) do
+  defp create_user(user_id) do
+    %Qms.User{slack_user_id: user_id}
+      |> Qms.Repo.insert
+  end
+
+  defp render_success(user, conn) do
     spotify_url = Spotify.Auth.generate_url()
     render conn, "create.json", url: spotify_url, type: :success
   end
