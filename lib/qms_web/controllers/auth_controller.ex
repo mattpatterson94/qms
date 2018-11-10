@@ -5,16 +5,15 @@ defmodule QmsWeb.AuthController do
   alias Qms.User
   alias Qms.Spotify
 
-  def create(conn, params) do
-    if valid_params(params) do
-      if user_exists(params["user_id"]) do
-        render_user_exists(conn)
-      else
-        render_success(conn)
-      end
-    else
-      render_error(conn)
+  def create(conn, _params = %{"user_id" => user_id}) do
+    cond do
+      user_exists(user_id) -> render_user_exists(conn)
+      true                 -> render_success(conn)
     end
+  end
+
+  def create(conn, _params) do
+    render_error(conn)
   end
 
   defp render_success(conn) do
@@ -36,9 +35,5 @@ defmodule QmsWeb.AuthController do
 
   defp user_exists(id) do
     Repo.get_by(User, slack_user_id: id)
-  end
-
-  defp valid_params(params) do
-    "user_id" in Map.keys(params)
   end
 end

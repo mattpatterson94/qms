@@ -48,7 +48,7 @@ defmodule QmsWeb.AuthControllerTest do
         token: "gIkuvaNzQIHg97ATvDxqgjtO"
       }
 
-      response =
+      _response =
         conn
         |> post(auth_path(conn, :create), request_params)
         |> json_response(200)
