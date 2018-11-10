@@ -18,6 +18,8 @@ defmodule QmsWeb.AuthController do
     render_error(conn)
   end
 
+  # Private
+
   defp create_user(user_id) do
     %Qms.User{slack_user_id: user_id}
       |> Qms.Repo.insert
