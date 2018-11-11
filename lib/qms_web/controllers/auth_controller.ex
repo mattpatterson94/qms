@@ -21,12 +21,13 @@ defmodule QmsWeb.AuthController do
   # Private
 
   defp create_user(user_id) do
-    %Qms.User{slack_user_id: user_id}
-      |> Qms.Repo.insert
+    user = %Qms.User{slack_user_id: user_id, temp_auth_token: UUID.uuid1()}
+    Qms.Repo.insert(user)
+    user
   end
 
   defp render_success(user, conn) do
-    spotify_url = Spotify.Auth.generate_url()
+    spotify_url = Spotify.Auth.generate_url(user.temp_auth_token)
     render conn, "create.json", url: spotify_url, type: :success
   end
 
