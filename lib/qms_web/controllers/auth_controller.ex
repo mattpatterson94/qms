@@ -7,7 +7,7 @@ defmodule QmsWeb.AuthController do
 
   def create(conn, _params = %{"user_id" => user_id}) do
     cond do
-      user_exists(user_id) -> render_user_exists(conn)
+      # user_exists(user_id) -> render_user_exists(conn)
       true                 -> create_user(user_id)
                               |> render_success(conn)
 
