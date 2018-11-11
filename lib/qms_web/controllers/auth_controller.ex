@@ -22,7 +22,7 @@ defmodule QmsWeb.AuthController do
 
   defp create_user(user_id) do
     user = %Qms.User{slack_user_id: user_id, temp_auth_token: UUID.uuid1()}
-    Qms.Repo.insert(user)
+    Qms.Repo.insert(user, on_conflict: :nothing)
     user
   end
 
