@@ -1,4 +1,4 @@
-defmodule Qms.Repo.Migrations.UpdateUsersTable do
+defmodule Qms.Repo.Migrations.UpdateUsersTable2 do
   use Ecto.Migration
 
   def up do
