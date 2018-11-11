@@ -74,6 +74,7 @@ defmodule QmsWeb.AuthControllerTest do
       assert response == expected
     end
 
+    @tag :skip
     test "Returns already authenticated if user already has a valid authentication token", %{conn: conn} do
       Qms.Repo.insert(%Qms.User{slack_user_id: "U2147483697"}, on_conflict: :nothing)
 
