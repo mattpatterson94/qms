@@ -74,9 +74,30 @@ defmodule QmsWeb.AuthControllerTest do
       assert response == expected
     end
 
-    @tag :skip
-    test "Returns already authenticated if user already has a valid authentication token", %{conn: conn} do
-      Qms.Repo.insert(%Qms.User{slack_user_id: "U2147483697"}, on_conflict: :nothing)
+    test "Does not return already authenticated if the user exists but does not have a valid status", %{conn: conn} do
+      Qms.Repo.insert(%Qms.User{slack_user_id: "U2147483697", status: 0}, on_conflict: :nothing)
+
+      request_params = %{
+        user_id: "U2147483697",
+        command: "/qmsauth",
+        token: "gIkuvaNzQIHg97ATvDxqgjtO"
+      }
+
+      response =
+        conn
+        |> post(auth_path(conn, :create), request_params)
+        |> json_response(200)
+
+      not_expected = %{
+        "response_type" => "ephemeral",
+        "text" => "You are already authenticated.",
+      }
+
+      refute response == not_expected
+    end
+
+    test "Returns already authenticated if user exists and has a valid status", %{conn: conn} do
+      Qms.Repo.insert(%Qms.User{slack_user_id: "U2147483697", status: 1}, on_conflict: :nothing)
 
       request_params = %{
         user_id: "U2147483697",
