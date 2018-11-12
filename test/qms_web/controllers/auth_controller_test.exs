@@ -20,7 +20,7 @@ defmodule QmsWeb.AuthControllerTest do
         |> json_response(200)
 
       expected_user = Qms.Repo.get_by(Qms.User, slack_user_id: "U2147483697")
-      expected_url = "https://accounts.spotify.com/authorize?response_type=code&client_id=12345&redirect_url=http://example.com?token=#{expected_user.temp_auth_token}"
+      expected_url = "https://accounts.spotify.com/authorize?response_type=code&client_id=12345&redirect_uri=http://example.com?token=#{expected_user.temp_auth_token}"
 
       expected = %{
         "response_type" => "ephemeral",
