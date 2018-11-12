@@ -11,7 +11,7 @@ defmodule Qms.Spotify.AuthTest do
   test "it generates a spotify auth url" do
     token = Ecto.UUID.generate
     auth_url = Auth.generate_url(token)
-    expected_url = "https://accounts.spotify.com/authorize?response_type=code&client_id=12345&state=#{token}&redirect_uri=http://example.com"
+    expected_url = "https://accounts.spotify.com/authorize?client_id=12345&redirect_uri=http://example.com&response_type=code&scope=user-read-currently-playing&state=#{token}"
 
     assert auth_url == expected_url
   end
