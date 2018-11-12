@@ -22,7 +22,7 @@ defmodule QmsWeb.AuthController do
   # Private
 
   defp set_user_temp_token(user) do
-    result = Ecto.Changeset.change(user, temp_auth_token: UUID.uuid1())
+    result = Ecto.Changeset.change(user, temp_auth_token: Ecto.UUID.generate)
               |> Repo.insert_or_update
 
     case result do

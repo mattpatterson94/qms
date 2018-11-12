@@ -3,7 +3,7 @@ defmodule Qms.Repo.Migrations.UpdateUsersTable2 do
 
   def up do
     alter table(:users) do
-      add :temp_auth_token, :binary
+      add :temp_auth_token, :uuid
       remove :spotify_token_expiration
       add :spotify_token_expiration, :utc_datetime
     end

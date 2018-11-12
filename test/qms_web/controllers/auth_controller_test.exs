@@ -2,8 +2,8 @@ defmodule QmsWeb.AuthControllerTest do
   use QmsWeb.ConnCase
 
   setup do
-    Application.put_env(:qms, "SPOTIFY_REDIRECT_URI", "http://example.com?token=%auth_token%")
-    Application.put_env(:qms, "SPOTIFY_CLIENT_ID", "12345")
+    System.put_env("SPOTIFY_REDIRECT_URI", "http://example.com?token=%auth_token%")
+    System.put_env("SPOTIFY_CLIENT_ID", "12345")
   end
 
   describe "create/2" do
