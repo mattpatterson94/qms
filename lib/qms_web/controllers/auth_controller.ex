@@ -6,11 +6,12 @@ defmodule QmsWeb.AuthController do
   alias Qms.Spotify
 
   def create(conn, _params = %{"user_id" => user_id}) do
-    cond do
-      # user_exists(user_id) -> render_user_exists(conn)
-      true                 -> create_user(user_id)
-                              |> render_success(conn)
+    user = find_user(user_id)
 
+    case User.valid(user) do
+      true  -> render_user_valid(conn)
+      false -> set_user_temp_token(user)
+                |> render_success(conn)
     end
   end
 
@@ -20,10 +21,13 @@ defmodule QmsWeb.AuthController do
 
   # Private
 
-  defp create_user(user_id) do
-    user = %Qms.User{slack_user_id: user_id, temp_auth_token: UUID.uuid1()}
-    Qms.Repo.insert(user, on_conflict: :nothing)
-    user
+  defp set_user_temp_token(user) do
+    result = Ecto.Changeset.change(user, temp_auth_token: UUID.uuid1())
+              |> Repo.insert_or_update
+
+    case result do
+      {:ok, user} -> user
+    end
   end
 
   defp render_success(user, conn) do
@@ -31,7 +35,7 @@ defmodule QmsWeb.AuthController do
     render conn, "create.json", url: spotify_url, type: :success
   end
 
-  defp render_user_exists(conn) do
+  defp render_user_valid(conn) do
     conn
       |> put_status(200)
       |> render("create.json", type: :exists)
@@ -43,7 +47,10 @@ defmodule QmsWeb.AuthController do
       |> render("create.json", type: :error)
   end
 
-  defp user_exists(id) do
-    Repo.get_by(User, slack_user_id: id)
+  defp find_user(id) do
+    case Repo.get_by(User, slack_user_id: id) do
+      nil  -> %Qms.User{slack_user_id: id}
+      user -> user
+    end
   end
 end

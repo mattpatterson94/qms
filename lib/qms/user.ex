@@ -20,4 +20,8 @@ defmodule Qms.User do
     |> validate_required([:slack_user_id, :status])
     |> validate_inclusion(:status, 0..1)
   end
+
+  def valid(user) do
+    user.status == 1
+  end
 end
