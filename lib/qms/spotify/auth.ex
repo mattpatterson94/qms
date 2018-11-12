@@ -4,7 +4,7 @@ defmodule Qms.Spotify.Auth do
   def generate_url(auth_token) do
     @spotify_host
     |> with_param("response_type", "code", "?")
-    |> with_param("client_id", Application.get_env(:qms, "SPOTIFY_CLIENT_ID"))
+    |> with_param("client_id", System.get_env("SPOTIFY_CLIENT_ID"))
     |> with_param("redirect_url", redirect_url_with_auth_token(auth_token))
   end
 
@@ -13,7 +13,7 @@ defmodule Qms.Spotify.Auth do
   end
 
   defp redirect_url_with_auth_token(auth_token) do
-    Application.get_env(:qms, "SPOTIFY_REDIRECT_URI")
+    System.get_env("SPOTIFY_REDIRECT_URI")
       |> String.replace("%auth_token%", auth_token)
   end
 end
