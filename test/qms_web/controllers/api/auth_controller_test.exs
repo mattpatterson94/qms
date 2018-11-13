@@ -1,4 +1,4 @@
-defmodule QmsWeb.AuthControllerTest do
+defmodule QmsWeb.Api.AuthControllerTest do
   use QmsWeb.ConnCase
 
   setup do

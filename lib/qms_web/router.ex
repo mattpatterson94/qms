@@ -13,14 +13,15 @@ defmodule QmsWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", QmsWeb do
-    pipe_through :api # Use the default browser stack
+  scope "/webhook", QmsWeb do
+    pipe_through :browser
 
-    resources "/auth", AuthController, only: [:create]
+    resources "/auth", Webhook.AuthController, only: [:index]
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", QmsWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", QmsWeb do
+    pipe_through :api
+
+    resources "/auth", Api.AuthController, only: [:create]
+  end
 end

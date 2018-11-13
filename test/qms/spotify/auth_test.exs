@@ -1,7 +1,7 @@
-defmodule Qms.Spotify.AuthTest do
+defmodule Qms.Spotify.AuthorizeUrlGeneratorTest do
   use Qms.DataCase
 
-  alias Qms.Spotify.Auth
+  alias Qms.Spotify.AuthorizeUrlGenerator
 
   setup do
     System.put_env("SPOTIFY_REDIRECT_URI", "http://example.com")
@@ -10,7 +10,7 @@ defmodule Qms.Spotify.AuthTest do
 
   test "it generates a spotify auth url" do
     token = Ecto.UUID.generate
-    auth_url = Auth.generate_url(token)
+    auth_url = AuthorizeUrlGenerator.generate_url(token)
     expected_url = "https://accounts.spotify.com/authorize?client_id=12345&redirect_uri=http://example.com&response_type=code&scope=user-read-currently-playing&state=#{token}"
 
     assert auth_url == expected_url
