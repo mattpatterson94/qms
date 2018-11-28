@@ -1,9 +1,11 @@
 defmodule QmsWeb.Api.AuthController do
   use QmsWeb, :controller
 
-  alias Qms.Repo
-  alias Qms.User
-  alias Qms.Spotify
+  alias Qms.{
+    Repo,
+    User,
+    Spotify
+  }
 
   def create(conn, _params = %{"user_id" => user_id}) do
     user = find_user(user_id)
@@ -31,7 +33,7 @@ defmodule QmsWeb.Api.AuthController do
   end
 
   defp render_success(user, conn) do
-    spotify_url = Spotify.AuthorizeUrlGenerator.generate_url(user.temp_auth_token)
+    spotify_url = Spotify.AuthorizeUrlGenerator.generate(user.temp_auth_token)
     render conn, "create.json", url: spotify_url, type: :success
   end
 

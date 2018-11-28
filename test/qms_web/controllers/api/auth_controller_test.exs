@@ -74,7 +74,7 @@ defmodule QmsWeb.Api.AuthControllerTest do
       assert response == expected
     end
 
-    test "Does not return already authenticated if the user exists but does not have a valid status", %{conn: conn} do
+    test "Returns already authenticated if the user exists but does not have a valid status", %{conn: conn} do
       Qms.Repo.insert(%Qms.User{slack_user_id: "U2147483697", status: 0}, on_conflict: :nothing)
 
       request_params = %{

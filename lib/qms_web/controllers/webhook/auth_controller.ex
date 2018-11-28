@@ -11,7 +11,7 @@ defmodule QmsWeb.Webhook.AuthController do
     user = find_user_by_state(state)
 
     case user do
-      user  -> authenticate_user(user, code)
+      user  -> authenticate_user(code)
                 |> save_user_tokens(user)
                 |> render_user_authenticated(conn)
       nil -> render_user_not_found(conn)
@@ -31,16 +31,15 @@ defmodule QmsWeb.Webhook.AuthController do
 
   defp save_user_tokens(response, user) do
     Ecto.Changeset.change(user,
-      spotify_access_token: response["access_token"],
-      spotify_refresh_token: response["refresh_token"],
-      spotify_token_expiration: response["expires_in"]
+      spotify_access_token: response.access_token,
+      spotify_refresh_token: response.refresh_token,
+      spotify_token_expiration: response.expires_in
     )
-      |> IO.inspect
       |> Repo.update
   end
 
-  defp authenticate_user(user, code) do
-    Spotify.Authorization.by_code(user, code)
+  defp authenticate_user(code) do
+    Spotify.GrantUserAccessToken.call(code)
   end
 
   defp render_user_not_found(conn) do
