@@ -42,7 +42,8 @@ defmodule Qms.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:timex, "~> 3.1"},
-      {:httpoison, "~> 1.4"}
+      {:httpoison, "~> 1.4"},
+      {:mox, "~> 0.5", only: :test}
     ]
   end
 
