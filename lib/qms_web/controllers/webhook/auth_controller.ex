@@ -31,7 +31,7 @@ defmodule QmsWeb.Webhook.AuthController do
 
   defp save_user_tokens(response, user) do
     with(
-        {:ok, current_datetime} <- DateTime.now("Etc/UTC"),
+        {:ok, current_datetime} <- Ecto.DateTime.utc,
         expiry <- DateTime.add(current_datetime, response[:expires_in], :second)
     ) do
       Ecto.Changeset.change(user,
