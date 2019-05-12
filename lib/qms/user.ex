@@ -32,12 +32,6 @@ defmodule Qms.User do
   end
 
   def valid_access_token(user) do
-    IO.puts("db expire")
-    IO.inspect(user.spotify_token_expiration)
-
-    IO.puts("current timestamp")
-    IO.inspect(DateTime.now("Etc/UTC"))
-
     with({:ok, current_datetime} <- DateTime.now("Etc/UTC")) do
       current_datetime < user.spotify_token_expiration
     end

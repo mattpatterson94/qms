@@ -58,6 +58,7 @@ defmodule QmsWeb.Api.SongController do
   end
 
   defp render_song_playing(song, text, conn) do
+    IO.puts "song"
     IO.inspect(song)
 
     conn

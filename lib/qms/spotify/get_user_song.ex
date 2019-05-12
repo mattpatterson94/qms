@@ -10,15 +10,15 @@ defmodule Qms.Spotify.GetUserSong do
     ]
 
     case Player.get("/currently-playing", headers) do
-      {:ok, %HTTPoison.Response{body: body, status_code: 200}} ->
+      {:ok, %HTTPoison.Response{body: body, status_code: status_code}} when status_code in [200, 204] ->
         body
 
       {:ok, %HTTPoison.Response{body: body, status_code: 400}} ->
-        IO.puts("There was an error")
-        IO.inspect(body)
+        IO.puts "There was an error"
+        IO.inspect body
 
       {:error, %HTTPoison.Error{reason: reason}} ->
-        IO.inspect(reason)
+        IO.inspect reason
         reason
     end
   end
