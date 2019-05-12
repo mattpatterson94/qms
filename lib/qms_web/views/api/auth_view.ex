@@ -1,4 +1,4 @@
-defmodule QmsWeb.AuthView do
+defmodule QmsWeb.Api.AuthView do
   use QmsWeb, :view
 
   def render("create.json", params) do
@@ -25,7 +25,7 @@ defmodule QmsWeb.AuthView do
           response_type: "ephemeral",
           text: "You are already authenticated."
         }
-      params[:type] == :bad ->
+      params[:type] == :error ->
         %{
           response_type: "ephemeral",
           text: "There was an error with your call. Please try again later."
