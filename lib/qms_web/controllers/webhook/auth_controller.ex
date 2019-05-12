@@ -31,10 +31,9 @@ defmodule QmsWeb.Webhook.AuthController do
 
   defp save_user_tokens(response, user) do
     with(
-        {:ok, current_datetime} <- Ecto.DateTime.utc,
+        {:ok, current_datetime} <- DateTime.now("Etc/UTC"),
         expiry <- DateTime.add(current_datetime, response[:expires_in], :second)
     ) do
-      IO.inspect "Expires: #{expiry}"
       Ecto.Changeset.change(user,
         spotify_access_token: response[:access_token],
         spotify_refresh_token: response[:refresh_token],
