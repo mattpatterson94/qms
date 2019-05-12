@@ -22,15 +22,27 @@ defmodule QmsWeb.Api.SongView do
               ]
             }
         end
+      params[:type] == :authentication ->
+        %{
+          response_type: "ephemeral",
+          text: "We need permission to use your Spotify.",
+          attachments: [
+            %{
+              fallback: "<#{params[:url]}|Authenticate with Spotify>",
+              actions: [
+                %{
+                  type: "button",
+                  text: "Authenticate with Spotify",
+                  url: "#{params[:url]}"
+                }
+              ]
+            }
+          ]
+        }
       params[:type] == :error ->
         %{
           response_type: "ephemeral",
           text: "You are not authenticated."
-        }
-      true ->
-        %{
-          response_type: "ephemeral",
-          text: "There was an error with your call. Please try again later."
         }
     end
   end
