@@ -22,7 +22,6 @@ defmodule QmsWeb.Router do
   scope "/api", QmsWeb do
     pipe_through :api
 
-    resources "/auth", Api.AuthController, only: [:create]
     resources "/song", Api.SongController, only: [:create]
   end
 end
