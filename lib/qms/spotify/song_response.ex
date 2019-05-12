@@ -12,6 +12,7 @@ defmodule Qms.Spotify.SongResponse do
       time: current_time(song),
       image_url: image_url(song),
       song_url: song_url(song),
+      song_uri: song_uri(song),
       sample_url: sample_url(song)
     }
   end
@@ -45,6 +46,10 @@ defmodule Qms.Spotify.SongResponse do
 
   defp song_url(song) do
     song[:item]["external_urls"]["spotify"]
+  end
+
+  defp song_uri(song) do
+    song[:item]["uri"]
   end
 
   defp sample_url(song) do
