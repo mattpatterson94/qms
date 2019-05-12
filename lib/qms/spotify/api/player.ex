@@ -8,10 +8,15 @@ defmodule Qms.Spotify.Api.Player do
     @host <> url
   end
 
+  def process_response_body(body) when body == "", do: ""
+
   def process_response_body(body) do
+    IO.inspect "NOT EMPTY BODY"
+    IO.inspect body
+
     body
-    |> Poison.decode!
+    |> Poison.decode!()
     |> Map.take(@allowed_fields)
-    |> Enum.map(fn({k, v}) -> {String.to_atom(k), v} end)
+    |> Enum.map(fn {k, v} -> {String.to_atom(k), v} end)
   end
 end
