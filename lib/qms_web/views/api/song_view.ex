@@ -42,7 +42,7 @@ defmodule QmsWeb.Api.SongView do
       params[:type] == :error ->
         %{
           response_type: "ephemeral",
-          text: "You are not authenticated."
+          text: "There was an error with your call. Please try again later."
         }
     end
   end
