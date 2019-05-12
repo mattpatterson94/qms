@@ -58,12 +58,15 @@ defmodule QmsWeb.Api.SongController do
   end
 
   defp render_song_playing(song, text, conn) do
-    IO.puts "song"
-    IO.inspect(song)
+    # IO.inspect song
+
+    response = Spotify.SongResponse.format(song, text)
+
+    IO.inspect response
 
     conn
     |> put_status(200)
-    |> render("create.json", song: song, text: text, type: :success)
+    |> render("create.json", presenter: response, type: :success)
   end
 
   defp set_user_temp_token(user) do

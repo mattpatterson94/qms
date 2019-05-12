@@ -11,9 +11,6 @@ defmodule Qms.Spotify.Api.Player do
   def process_response_body(body) when body == "", do: ""
 
   def process_response_body(body) do
-    IO.inspect "NOT EMPTY BODY"
-    IO.inspect body
-
     body
     |> Poison.decode!()
     |> Map.take(@allowed_fields)
