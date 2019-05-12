@@ -34,6 +34,7 @@ defmodule QmsWeb.Webhook.AuthController do
         {:ok, current_datetime} <- Ecto.DateTime.utc,
         expiry <- DateTime.add(current_datetime, response[:expires_in], :second)
     ) do
+      IO.inspect "Expires: #{expiry}"
       Ecto.Changeset.change(user,
         spotify_access_token: response[:access_token],
         spotify_refresh_token: response[:refresh_token],
