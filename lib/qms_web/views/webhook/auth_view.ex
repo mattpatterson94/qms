@@ -5,6 +5,7 @@ defmodule QmsWeb.Webhook.AuthView do
     case type do
       :success ->
         "You are now authenticated"
+
       _ ->
         "User not found"
     end

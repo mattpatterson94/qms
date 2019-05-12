@@ -8,8 +8,9 @@ defmodule QmsWeb.Api.SongView do
           params[:song] == "" ->
             %{
               response_type: "ephemeral",
-              text: "You aren't listening to a song.",
+              text: "You aren't listening to a song."
             }
+
           true ->
             %{
               response_type: "in_channel",
@@ -17,11 +18,15 @@ defmodule QmsWeb.Api.SongView do
               attachments: [
                 %{
                   pretext: "#{params[:text]}",
-                  text: "#{params[:song][:item]["name"]} - #{List.first(params[:song][:item]["artists"])["name"]}",
+                  text:
+                    "#{params[:song][:item]["name"]} - #{
+                      List.first(params[:song][:item]["artists"])["name"]
+                    }"
                 }
               ]
             }
         end
+
       params[:type] == :authentication ->
         %{
           response_type: "ephemeral",
@@ -39,6 +44,7 @@ defmodule QmsWeb.Api.SongView do
             }
           ]
         }
+
       params[:type] == :error ->
         %{
           response_type: "ephemeral",

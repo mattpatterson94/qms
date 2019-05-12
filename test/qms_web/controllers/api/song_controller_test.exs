@@ -7,7 +7,9 @@ defmodule QmsWeb.Api.AuthControllerTest do
   end
 
   describe "create/2" do
-    test "Returns a slack response which includes a button to authenticate user with Spotify", %{conn: conn} do
+    test "Returns a slack response which includes a button to authenticate user with Spotify", %{
+      conn: conn
+    } do
       request_params = %{
         user_id: "U2147483697",
         command: "/qmsauth",
@@ -20,7 +22,11 @@ defmodule QmsWeb.Api.AuthControllerTest do
         |> json_response(200)
 
       expected_user = Qms.Repo.get_by(Qms.User, slack_user_id: "U2147483697")
-      expected_url = "https://accounts.spotify.com/authorize?client_id=12345&redirect_uri=http://example.com&response_type=code&scope=user-read-currently-playing&state=#{expected_user.temp_auth_token}"
+
+      expected_url =
+        "https://accounts.spotify.com/authorize?client_id=12345&redirect_uri=http://example.com&response_type=code&scope=user-read-currently-playing&state=#{
+          expected_user.temp_auth_token
+        }"
 
       expected = %{
         "response_type" => "ephemeral",
@@ -68,7 +74,7 @@ defmodule QmsWeb.Api.AuthControllerTest do
 
       expected = %{
         "response_type" => "ephemeral",
-        "text" => "There was an error with your call. Please try again later.",
+        "text" => "There was an error with your call. Please try again later."
       }
 
       assert response == expected

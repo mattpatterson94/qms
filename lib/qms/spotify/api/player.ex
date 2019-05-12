@@ -10,8 +10,8 @@ defmodule Qms.Spotify.Api.Player do
 
   def process_response_body(body) do
     body
-    |> Poison.decode!
+    |> Poison.decode!()
     |> Map.take(@allowed_fields)
-    |> Enum.map(fn({k, v}) -> {String.to_atom(k), v} end)
+    |> Enum.map(fn {k, v} -> {String.to_atom(k), v} end)
   end
 end
